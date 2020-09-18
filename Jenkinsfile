@@ -5,8 +5,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                git credentialsId: 'GIT_CREDS', url: 'https://github.com/pravi1991/ci-cd.git'
-            }
+                git credentialsId: 'GITHUB_CREDS', url: 'https://github.com/pravi1991/ci-cd.git'            }
 
             }
         }
