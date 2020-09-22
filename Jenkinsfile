@@ -6,14 +6,19 @@ pipeline {
                     git credentialsId: 'GIT_CREDS', url: 'https://github.com/pravi1991/ci-cd.git'            
                 }
             }
-        stage('Unit Testing'){
+        stage('static code analysis'){
+            agent { docker 'ubuntu' }
             steps {
                 echo 'unit testing'
+                sh 'lsb_release'
+                sh 'uname -a'
             }
         }
         stage('Minikube Kubernetes Deploy') {
             steps {
-                kubernetesDeploy configs: 'test.deploy.yaml', kubeconfigId: 'KUBECONFIG', enableConfigSubstitution: true
+                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'mykube', namespace: '', serverUrl: '') {
+                        sh 'kubectl apply -f '
+                    }
                 }
             }
         }
