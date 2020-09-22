@@ -7,7 +7,9 @@ pipeline {
                 }
             }
         stage('Unit Testing'){
+            steps {
             echo 'unit testing'
+            }
         }
         stage('Minikube Kubernetes Deploy') {
             steps {
