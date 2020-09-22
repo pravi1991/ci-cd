@@ -10,8 +10,9 @@ pipeline {
             //agent { docker 'ubuntu' }
             steps {
                 echo 'unit testing'
-                sh 'kubectl apply -f test.deploy.yaml --dry-run=server --validate=True'
-                
+                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'mykube', namespace: '', serverUrl: '') {
+                        sh 'kubectl apply -f test.deploy.yaml --validate=true --dry-run=server'
+                    }
             }
         }
         stage('Minikube Kubernetes Deploy') {
