@@ -10,7 +10,7 @@ pipeline {
             agent { docker 'ubuntu' }
             steps {
                 echo 'unit testing'
-                sh 'uname -a'
+                sh 'kubectl get nodes'
             }
         }
         stage('Minikube Kubernetes Deploy') {
