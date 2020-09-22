@@ -8,8 +8,12 @@ pipeline {
             }
         stage('Minikube Kubernetes Deploy') {
             steps {
-                kubernetesDeploy configs: 'test.deploy.yaml', kubeconfigId: 'KUBECONFIG', enableConfigSubstitution: true
-                }
+
+                      kubernetesDeploy(
+                                credentialsType: 'KubeConfig',
+                                kubeConfig: [path: '/var/lib/jenkins/.minikube/kubeconfig'],
+                                configs: 'test.deploy.yml', 
+                                      )                }
             }
         }
     }
