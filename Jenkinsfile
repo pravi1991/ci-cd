@@ -17,7 +17,7 @@ pipeline {
         stage('Minikube Kubernetes Deploy') {
             steps {
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'mykube', namespace: '', serverUrl: '') {
-                        sh 'kubectl apply -f '
+                        sh 'kubectl get nodes'
                     }
                 }
             }
