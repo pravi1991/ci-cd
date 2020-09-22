@@ -10,7 +10,6 @@ pipeline {
             agent { docker 'ubuntu' }
             steps {
                 echo 'unit testing'
-                sh 'lsb_release'
                 sh 'uname -a'
             }
         }
