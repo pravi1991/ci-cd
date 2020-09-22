@@ -1,12 +1,12 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
+        stage('checkout') {
             steps {
                     git credentialsId: 'GIT_CREDS', url: 'https://github.com/pravi1991/ci-cd.git'            
                 }
             }
-        stage('static code analysis'){
+        stage('test: static code analysis'){
             //agent { docker 'ubuntu' }
             steps {
                 echo 'unit testing'
