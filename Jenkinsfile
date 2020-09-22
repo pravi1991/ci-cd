@@ -7,10 +7,10 @@ pipeline {
                 }
             }
         stage('static code analysis'){
-            agent { docker 'ubuntu' }
+            //agent { docker 'ubuntu' }
             steps {
                 echo 'unit testing'
-                sh 'kubectl get nodes'
+                sh 'kubectl apply -f test.deploy.yaml --dry-run --validate=True'
             }
         }
         stage('Minikube Kubernetes Deploy') {
