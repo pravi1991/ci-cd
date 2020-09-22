@@ -11,6 +11,7 @@ pipeline {
             steps {
                 echo 'unit testing'
                 sh 'kubectl apply -f test.deploy.yaml --dry-run=server --validate=True'
+                
             }
         }
         stage('Minikube Kubernetes Deploy') {
