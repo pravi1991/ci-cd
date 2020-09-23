@@ -28,7 +28,6 @@ pipeline {
                 }
             steps {
                 withKubeConfig(credentialsId: 'mykube') {
-                        sh 'docker images'
                         unstash 'elk'
                         sh 'ls -la'
                     }
