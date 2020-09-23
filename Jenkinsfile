@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-
+                    checkout scm
                     git credentialsId: 'GIT_CREDS', url: 'https://github.com/pravi1991/ci-cd.git'            
                     stash 'elk'
                 }
@@ -27,11 +27,10 @@ pipeline {
                     }
                 }
             steps {
-                sh 'apt update && apt-get install -y git'
                 withKubeConfig(credentialsId: 'mykube') {
                         sh 'docker images'
                         unstash 'elk'
-                        sh 'git log'
+                        sh 'ls -la'
                     }
                 }
             }
