@@ -7,9 +7,10 @@ pipeline {
                 }
             }
         stage('test: static code analysis'){
-            //agent { docker 'ubuntu' }
+            agent { docker 'ubuntu' }
             steps {
                 echo 'STATIC CODE ANALYSIS'
+                sh 'docker build -t test .'
                 withKubeConfig(credentialsId: 'mykube') {
                     sh 'kubectl apply -f manifests/ --validate=true --dry-run=server'
                 }
