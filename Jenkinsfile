@@ -7,7 +7,6 @@ pipeline {
                 }
             }
         stage('test: static code analysis'){
-            agent { docker 'ubuntu' }
             steps {
                 echo 'STATIC CODE ANALYSIS'
                 sh 'docker build -t test .'
