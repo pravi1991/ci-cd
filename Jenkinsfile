@@ -11,11 +11,14 @@ pipeline {
         stage('test'){
             parallel {
                 stage('static code analysis'){
-                    steps {
-                        echo 'STATIC CODE ANALYSIS'
-                        withKubeConfig(credentialsId: 'mykube') {
-                            sh 'kubectl apply -f manifests/ --validate=true --dry-run=server'
+                    agent { 
+                        docker { 
+                            image 'zegl/kube-score'
                         }
+                    }
+                    steps {
+                        unstash 'elk'
+                        sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'
                     }
                 }
             }
