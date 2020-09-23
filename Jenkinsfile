@@ -24,10 +24,10 @@ pipeline {
             agent { 
                 docker {
                     image 'ubuntu'
-                    args 'apt update && apt install git'
                     }
                 }
             steps {
+                sh 'apt update && apt-get install -y git'
                 withKubeConfig(credentialsId: 'mykube') {
                         sh 'docker images'
                         unstash 'elk'
