@@ -18,7 +18,7 @@ pipeline {
         stage('Minikube Kubernetes Deploy') {
             steps {
                 withKubeConfig(credentialsId: 'mykube') {
-                        sh 'kubectl apply -f manifests/'
+                        sh 'docker images'
                     }
                 }
             }
