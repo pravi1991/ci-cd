@@ -1,9 +1,3 @@
-NAME: elasticsearch
-LAST DEPLOYED: Sun Sep 20 16:44:22 2020
-NAMESPACE: default
-STATUS: pending-install
-REVISION: 1
-HOOKS:
 ---
 # Source: elasticsearch/templates/test/test-elasticsearch-health.yaml
 apiVersion: v1
@@ -268,8 +262,3 @@ spec:
           - name: "elasticsearch-master"
             mountPath: /usr/share/elasticsearch/data
 
-NOTES:
-1. Watch all cluster members come up.
-  $ kubectl get pods --namespace=default -l app=elasticsearch-master -w
-2. Test cluster health using Helm test.
-  $ helm test elasticsearch --cleanup
