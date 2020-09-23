@@ -11,14 +11,14 @@ pipeline {
             steps {
                 echo 'STATIC CODE ANALYSIS'
                  withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'mykube', namespace: '', serverUrl: '') {
-                        sh 'kubectl apply -f manifest/ --validate=true --dry-run=server'
+                        sh 'kubectl apply -f manifests/ --validate=true --dry-run=server'
                     }
             }
         }
         stage('Minikube Kubernetes Deploy') {
             steps {
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'mykube', namespace: '', serverUrl: '') {
-                        sh 'kubectl apply -f manifest'
+                        sh 'kubectl apply -f manifests/'
                     }
                 }
             }
