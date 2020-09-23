@@ -9,16 +9,16 @@ pipeline {
         stage('test: static code analysis'){
             //agent { docker 'ubuntu' }
             steps {
-                echo 'unit testing'
+                echo 'STATIC CODE ANALYSIS'
                  withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'mykube', namespace: '', serverUrl: '') {
-                        sh 'kubectl apply -f test.deploy.yaml --validate=true --dry-run=server'
+                        sh 'kubectl apply -f manifest/ --validate=true --dry-run=server'
                     }
             }
         }
         stage('Minikube Kubernetes Deploy') {
             steps {
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'mykube', namespace: '', serverUrl: '') {
-                        sh 'kubectl get nodes'
+                        sh 'kubectl apply -f manifest'
                     }
                 }
             }
