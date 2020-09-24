@@ -11,7 +11,11 @@ pipeline {
         stage('test'){
             parallel {
                 stage('static code analysis'){
-
+                    agent { 
+                        docker { 
+                            image 'ubuntu'
+                        }
+                    }
                     steps {
                         unstash 'elk'
                         //sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'
