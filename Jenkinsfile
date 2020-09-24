@@ -24,7 +24,8 @@ pipeline {
                     }
                     steps {
                         unstash 'elk'
-                        sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'
+                        //sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'
+                        sh 'kube-score score --help'
                         //sh 'ls manifest'    
                     }
                     post {
