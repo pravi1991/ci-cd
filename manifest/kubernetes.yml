@@ -14,4 +14,4 @@ rules:
           expressions:
             - key: image
               op: starts-with
-              value: "praveendevopsnexus"
+              value: "usercyborg"
