@@ -1,3 +1,4 @@
 FROM zegl/kube-score
 ENV RAY MYAV
-RUN 'echo $RAY'
+CMD ['tail', '-f', '/dev/null']
+
