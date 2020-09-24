@@ -18,7 +18,16 @@ pipeline {
                     }
                     steps {
                         unstash 'elk'
-                        sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'
+                        //sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'
+                        def status = sh 'uname -a', returnStatus:true
+                        if (rc != 0) 
+                        { 
+                            sh "echo 'exit code is NOT zero'"
+                        } 
+                        else 
+                        {
+                            sh "echo 'exit code is zero'"
+                        }
                     }
                 }
             }
