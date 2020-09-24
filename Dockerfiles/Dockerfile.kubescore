@@ -1,0 +1,3 @@
+FROM zegl/kube-score
+
+COPY manifests /tmp 
