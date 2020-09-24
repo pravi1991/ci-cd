@@ -19,19 +19,23 @@ pipeline {
                     steps {
                         unstash 'elk'
                         //sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'
-                        script {
-                        def status = sh 'uname -a', returnStatus:true
-                        if (rc != 0) 
-                        { 
-                            sh "echo 'exit code is NOT zero'"
-                        } 
-                        else 
-                        {
-                            sh "echo 'exit code is zero'"
-                        }}
+    
+                    }
+                }
+            }
+        }
+        stage('Minikube Kubernetes Deploy') {
+            agent { 
+                docker {
+                    image 'ubuntu'
+                    }
+                }
+            steps {
+                withKubeConfig(credentialsId: 'mykube') {
+                        unstash 'elk'
+                        sh 'ls -la'
                     }
                 }
             }
         }
     }
-}
