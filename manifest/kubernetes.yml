@@ -14,4 +14,4 @@ rules:
           expressions:
             - key: image
               op: eq
-              value: "docker.elastic.co/elasticsearch/elasticsearwh"
+              value: "docker.elastic.co/elasticsearch"
