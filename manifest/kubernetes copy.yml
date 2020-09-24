@@ -1,0 +1,93 @@
+version: 1
+description: Rules for Kubernetes spec files
+type: Kubernetes
+files:
+  - "*.yml"
+rules:
+
+  - id: ALLOW_KIND
+    severity: FAILURE
+    message: Allowed kinds
+    resource: "*"
+    assertions:
+      - key: kind
+        op: in
+        value: Pod,Policy,ServiceAccount,NetworkPolicy
+    tags:
+      - kind
+
+  - id: POD_CONTAINERS
+    severity: FAILURE
+    message: Pod must include containers
+    resource: Pod
+    assertions:
+      - key: spec.containers
+        op: present
+    tags:
+      - pod
+
+  - id: POD_SERVICE_ACCOUNT
+    severity: FAILURE
+    message: Pod should use a service account
+    resource: Pod
+    assertions:
+      - key: serviceAccountName
+        op: present
+    tags:
+      - pod
+
+  - id: POD_SECURITY_CONTEXT
+    severity: FAILURE
+    message: Pod should set securityContent
+    resource: Pod
+    assertions:
+      - key: spec.securityContext.runAsNonRoot
+        op: eq
+        value: true
+      - key: spec.securityContext.readOnlyRootFilesystem
+        op: eq
+        value: true
+    tags:
+      - pod
+      - security
+
+  - id: POLICY
+    severity: FAILURE
+    message: Policy must include a spec
+    resource: Policy
+    assertions:
+      - key: spec
+        op: present
+    tags:
+      - policy
+
+  - id: DEFAULT_NAMESPACE
+    severity: FAILURE
+    message: Policy should not use default namespace
+    resource: Policy
+    assertions:
+      - key: spec.namespace
+        op: ne
+        value: default
+    tags:
+      - policy
+
+  - id: CUSTOM
+    severity: FAILURE
+    message: Custom
+    resource: Policy
+    invoke:
+      url: https://19kfojjbi2.execute-api.us-east-1.amazonaws.com/dev/failure
+      payload: "{ user: spec.user, namespace: spec.namespace }"
+    tags:
+      - custom
+
+  - id: NETWORK
+    severity: FAILURE
+    message: Network policy should include from pods
+    resource: NetworkPolicy
+    assertions:
+      - key: spec.allowIncoming.from[].pods
+        op: present
+    tags:
+      - network
