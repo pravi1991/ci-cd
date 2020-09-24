@@ -1,3 +1,3 @@
 FROM zegl/kube-score
-
-COPY $MYAV/manifest /tmp 
+ENV RAY MYAV
+RUN 'echo $RAY'
