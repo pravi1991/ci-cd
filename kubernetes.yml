@@ -1,0 +1,17 @@
+version: 1
+description: Rules for Kubernetes spec files
+type: Kubernetes
+files:
+  - "*.yaml"
+rules:
+  - id: DEPLOYMENT_IMAGE_REPOSITORY
+    severity: FAILURE
+    message: Deployment must use a valid image repository
+    resource: Deployment
+    assertions:
+      - every:
+          key: spec.template.spec.containers
+          expressions:
+            - key: image
+              op: eq
+              value: "docker.elastic.co/elasticsearch/elasticsearch"
