@@ -9,11 +9,10 @@ pipeline {
                 }
             }
         stage('BUILD') {
-            stage {
-                step {
-                    echo 'BUILD STAGE'
-                }
+            step {
+                echo 'BUILD STAGE'
             }
+        
         }
         stage('TESTS'){
             parallel {
