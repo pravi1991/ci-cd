@@ -33,7 +33,7 @@ pipeline {
             steps {
                 withKubeConfig(credentialsId: 'mykube') {
                         unstash 'elk'
-                        sh '${env.WORKSPACE}'
+                        sh '${WORKSPACE}'
                         sh 'ls -la'
                     }
                 }
