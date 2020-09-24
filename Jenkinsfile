@@ -29,8 +29,11 @@ pipeline {
                         //sh 'ls manifest'    
                     }
                     post {
+                        success {
+                            echo 'ran static code analysis successfully'
+                        }
                         failure {
-                            
+                            echo 'static code failed'
                         }
                     }
                 }
