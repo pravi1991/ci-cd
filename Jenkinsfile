@@ -1,26 +1,37 @@
 pipeline {
     agent any
     stages {
-        stage('build') {
+        stage('CHECKOUT') {
             steps {
                     checkout scm
                     git credentialsId: 'GIT_CREDS', url: 'https://github.com/pravi1991/ci-cd.git'            
                     stash 'elk'
                 }
             }
-        stage('test'){
+        stage('BUILD') {
+            stage {
+                step {
+                    echo 'BUILD STAGE'
+                }
+            }
+        }
+        stage('TESTS'){
             parallel {
-                stage('static code analysis'){
+                stage('Static code analysis'){
                     agent { 
                         docker { 
-                            image 'ubuntu'
+                            image 'zegl/kube-score'
                         }
                     }
                     steps {
                         unstash 'elk'
-                        //sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'
-                        sh 'pwd'
-                        sh 'ls manifest'    
+                        sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'
+                        //sh 'ls manifest'    
+                    }
+                    post {
+                        failure {
+                            
+                        }
                     }
                 }
             }
