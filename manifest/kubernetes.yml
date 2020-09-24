@@ -7,7 +7,7 @@ rules:
   - id: DEPLOYMENT_IMAGE_REPOSITORY
     severity: FAILURE
     message: Deployment must use a valid image repository
-    resource: Deployment
+    resource: StatefulSet
     assertions:
       - every:
           key: spec.template.spec.containers
