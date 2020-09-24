@@ -13,5 +13,5 @@ rules:
           key: spec.template.spec.containers
           expressions:
             - key: image
-              op: eq
+              op: starts-with
               value: "praveendevopsnexus"
