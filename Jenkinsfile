@@ -33,18 +33,4 @@ pipeline {
                 }
             }
         }
-        stage('Minikube Kubernetes Deploy') {
-            agent { 
-                docker {
-                    image 'ubuntu'
-                    }
-                }
-            steps {
-                withKubeConfig(credentialsId: 'mykube') {
-                        unstash 'elk'
-                        sh 'ls -la'
-                    }
-                }
-            }
-        }
-    }
+        
