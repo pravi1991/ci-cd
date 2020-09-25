@@ -10,6 +10,11 @@ metadata:
 spec:
   serviceName: "elasticsearch-data"
   replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch-logging
+      version: 7.9.1
+      role: master
   template:
     metadata:
       labels:
