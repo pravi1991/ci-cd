@@ -1,0 +1,16 @@
+version: 1
+description: Rules for Kubernetes spec files
+type: Kubernetes
+files:
+  - "*.yaml"
+rules:
+
+  - id: SERVICE_TYPE
+    severity: FAILURE
+    message: Service should not have NodePort
+    resource: Service
+    assertions:
+      - key: spec.type
+        op: ne
+        value: NodePort
+
