@@ -13,7 +13,6 @@ spec:
   selector:
     matchLabels:
       app: elasticsearch
-      version: 7.9.1
       role: data
   template:
     metadata:
