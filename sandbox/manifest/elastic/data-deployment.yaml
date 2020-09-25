@@ -12,13 +12,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: elasticsearch-logging
+      app: elasticsearch
       version: 7.9.1
-      role: master
+      role: data
   template:
     metadata:
       labels:
-        app: elasticsearch-data
+        app: elasticsearch
         role: data
     spec:
       containers:
