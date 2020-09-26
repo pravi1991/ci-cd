@@ -31,7 +31,7 @@
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
 	  <stringProp name="HTTPSampler.domain">${__P(eshostname,localhost)}</stringProp>
-          <stringProp name="HTTPSampler.port">9200</stringProp>
+          <stringProp name="HTTPSampler.port">${__P(esport,9200)}</stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
 	  <stringProp name="HTTPSampler.path">${__P(esindexpath,/my-index-000001/_search?q=user.id:kimchy)}</stringProp>
@@ -63,7 +63,7 @@
             </collectionProp>
           </elementProp>
 	  <stringProp name="HTTPSampler.domain">${__P(eshostname,localhost)}</stringProp>
-          <stringProp name="HTTPSampler.port">9200</stringProp>
+          <stringProp name="HTTPSampler.port">${__P(esport,9200)}</stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
 	  <stringProp name="HTTPSampler.path">${__P(esindexpathpost,/my-index-000001/_doc)}</stringProp>
@@ -205,5 +205,3 @@
     </hashTree>
   </hashTree>
 </jmeterTestPlan>
-
-

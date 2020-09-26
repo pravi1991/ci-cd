@@ -10,6 +10,7 @@ modules:
     gui: false
     properties: 
       eshostname: 192.168.0.148
+      esport: 30001
       esindexpath: /my-index-000001/_search?q=user.id:kimchy
       esindexpathpost: /my-index-000001/_doc
 scenarios:
