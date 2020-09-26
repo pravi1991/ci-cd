@@ -1,10 +1,15 @@
+apiVersion: v1 
+kind: Namespace
+metadata:
+  name: tests
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app: perfomancetest
   name: perfomancetest
-  namespace: default
+  namespace: test
 spec:
   replicas: 1
   selector:
@@ -20,7 +25,14 @@ spec:
       containers:
       - image: praveendevopsnexus/python3-loadtest
         imagePullPolicy: Always
-
         command: ['tail','-f','/dev/null']
         name: python3-perfomancetest
+        volumeMounts: 
+        - name: config
+          mountPath: /datadir
       restartPolicy: Always
+      volumes: 
+      - name: config
+        configMap: 
+          name: perfomance-testing-cm
+

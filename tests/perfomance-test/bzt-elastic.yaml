@@ -4,7 +4,7 @@ execution:
 
 modules: 
   jmeter: 
-    path: ~/.bzt/jmeter-taurus/bin/jmeter
+    path: ./.bzt/jmeter-taurus/bin/jmeter
     download-link: http://apachemirror.wuchna.com//jmeter/binaries/apache-jmeter-5.3.zip
     version: 5.3
     gui: false
