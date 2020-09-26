@@ -14,7 +14,7 @@ pipeline {
             }
         
         }
-        stage('TESTS'){
+        stage('Pre TESTS'){
             parallel {
                 stage('Static code analysis'){
                     agent { 
@@ -39,12 +39,7 @@ pipeline {
                 }
             }
         }
-        stage('Minikube Kubernetes Deploy') {
-            agent { 
-                docker {
-                    image 'ubuntu'
-                    }
-                }
+        stage('Kubernetes Deployments') {
             steps {
                 withKubeConfig(credentialsId: 'mykube') {
                         unstash 'elk'
@@ -53,5 +48,16 @@ pipeline {
                     }
                 }
             }
+        }
+        stage('Post Tests') {
+            stage('Perfomance Testing') {
+                    agent {
+                        label 'slave'
+                    }
+                    steps {
+                        unstash 'elk'
+                        bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=30001 -report' 
+                    }
+                }
         }
     }
