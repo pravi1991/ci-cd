@@ -57,12 +57,10 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: elasticsearch-data-persistent-storage
-      annotations:
-        volume.beta.kubernetes.io/storage-class: "gp2"
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: standard
+      storageClassName: manual
       resources:
         requests:
-          storage: 10Gi
+          storage: 3Gi
 ---

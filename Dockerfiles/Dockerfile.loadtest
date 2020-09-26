@@ -1,5 +1,6 @@
 FROM python
 RUN apt update
+RUN apt install openjdk-11-jdk -y
 RUN pip3 install virtualenv bzt
 
 CMD python3 

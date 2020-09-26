@@ -1,0 +1,20 @@
+---
+execution:
+- scenario: simple
+
+modules: 
+  jmeter: 
+    path: ~/.bzt/jmeter-taurus/bin/jmeter
+    download-link: http://apachemirror.wuchna.com//jmeter/binaries/apache-jmeter-5.3.zip
+    version: 5.3
+    gui: false
+scenarios:
+  simple:
+    script: ./elastic.jmx
+
+reporting:
+- module: passfail
+  criteria:
+  - avg-rt>5000ms for 5s, stop as failed
+- module: junit-xml
+  data-source: pass-fail
