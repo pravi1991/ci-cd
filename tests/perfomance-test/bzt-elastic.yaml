@@ -8,13 +8,19 @@ modules:
     download-link: http://apachemirror.wuchna.com//jmeter/binaries/apache-jmeter-5.3.zip
     version: 5.3
     gui: false
+    properties: 
+      eshostname: 192.168.0.148
+      esindexpath: /my-index-000001/_search?q=user.id:kimchy
+      esindexpathpost: /my-index-000001/_doc
 scenarios:
   simple:
-    script: ./elastic.jmx
+    script: ./elasti1.jmx
 
 reporting:
 - module: passfail
   criteria:
   - avg-rt>5000ms for 5s, stop as failed
+  - failures>50% for 5s, stop as failed
 - module: junit-xml
   data-source: pass-fail
+

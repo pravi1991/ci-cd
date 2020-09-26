@@ -30,11 +30,11 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">192.168.0.148</stringProp>
+	  <stringProp name="HTTPSampler.domain">${__P(eshostname,localhost)}</stringProp>
           <stringProp name="HTTPSampler.port">9200</stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/my-index-000001/_search?q=user.id:kimchy</stringProp>
+	  <stringProp name="HTTPSampler.path">${__P(esindexpath,/my-index-000001/_search?q=user.id:kimchy)}</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -62,11 +62,11 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">192.168.0.148</stringProp>
+	  <stringProp name="HTTPSampler.domain">${__P(eshostname,localhost)}</stringProp>
           <stringProp name="HTTPSampler.port">9200</stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/my-index-000001/_doc</stringProp>
+	  <stringProp name="HTTPSampler.path">${__P(esindexpathpost,/my-index-000001/_doc)}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -205,3 +205,5 @@
     </hashTree>
   </hashTree>
 </jmeterTestPlan>
+
+
