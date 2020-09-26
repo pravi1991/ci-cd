@@ -1,0 +1,6 @@
+FROM python
+RUN apt update
+RUN pip3 install virtualenv bzt
+
+CMD python3 
+
