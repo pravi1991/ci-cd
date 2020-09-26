@@ -1,0 +1,25 @@
+kind: Deployment
+metadata:
+  labels:
+    app: perfomancetest
+  name: perfomancetest
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: perfomancetest
+  template:
+    metadata:
+      labels:
+        app: perfomancetest
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - image: praveendevopsnexus/python3-loadtest
+        imagePullPolicy: Always
+
+        command: ['tail','-f','/dev/null']
+        name: python3-perfomancetest
+      restartPolicy: Always
