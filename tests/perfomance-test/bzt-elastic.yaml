@@ -14,7 +14,7 @@ modules:
       esindexpathpost: /my-index-000001/_doc
 scenarios:
   simple:
-    script: ./elasti1.jmx
+    script: tests/perfomance-test/elastic.jmx
 
 reporting:
 - module: passfail
