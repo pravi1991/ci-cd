@@ -9,7 +9,7 @@ modules:
     version: 5.3
     gui: false
     properties: 
-      eshostname: 192.168.0.148
+      eshostname: 34.105.25.200
       esport: 30001
       esindexpath: /my-index-000001/_search?q=user.id:kimchy
       esindexpathpost: /my-index-000001/_doc
