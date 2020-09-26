@@ -1,9 +1,35 @@
 ---
 execution:
-- scenario: simple
+- write-xml-jtl: full
+  scenario: simple
 
 modules: 
   jmeter: 
+    xml-jtl-flags:
+      xml: true
+      fieldNames: true
+      time: true
+      timestamp: true
+      latency: true
+      connectTime: true
+      success: true
+      label: true
+      code: true
+      message: true
+      threadName: true
+      dataType: true
+      encoding: true
+      assertions: true
+      subresults: true
+      responseData: false
+      samplerData: false
+      responseHeaders: true
+      requestHeaders: true
+      responseDataOnError: true
+      saveAssertionResultsFailureMessage: true
+      bytes: true
+      threadCounts: true
+      url: true
     path: ./.bzt/jmeter-taurus/bin/jmeter
     download-link: http://apachemirror.wuchna.com//jmeter/binaries/apache-jmeter-5.3.zip
     version: 5.3
