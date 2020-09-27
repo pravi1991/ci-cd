@@ -8,20 +8,10 @@ pipeline {
                     stash 'elk'
                 }
             }
-        stage('BUILD') {
-            steps {
-                echo 'BUILD STAGE'
-            }
-        
-        }
         stage('Pre TESTS'){
             parallel {
                 stage('Static code analysis'){
-                    agent { 
-                        docker { 
-                            image 'zegl/kube-score'
-                        }
-                    }
+                    agent { label 'slave' }
                     steps {
                         unstash 'elk'
                         //sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'

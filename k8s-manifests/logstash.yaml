@@ -1,20 +1,4 @@
 ---
-# Source: logstash/templates/poddisruptionbudget.yaml
-apiVersion: policy/v1beta1
-kind: PodDisruptionBudget
-metadata:
-  name: "filebeat-logstash-pdb"
-  labels:
-    app: "filebeat-logstash"
-    chart: "logstash"
-    heritage: "Helm"
-    release: "filebeat"
-spec:
-  maxUnavailable: 1
-  selector:
-    matchLabels:
-      app: "filebeat-logstash"
----
 # Source: logstash/templates/service-headless.yaml
 kind: Service
 apiVersion: v1
@@ -22,9 +6,6 @@ metadata:
   name: "filebeat-logstash-headless"
   labels:
     app: "filebeat-logstash"
-    chart: "logstash"
-    heritage: "Helm"
-    release: "filebeat"
 spec:
   clusterIP: None
   selector:
@@ -40,9 +21,6 @@ metadata:
   name: filebeat-logstash
   labels:
     app: "filebeat-logstash"
-    chart: "logstash"
-    heritage: "Helm"
-    release: "filebeat"
 spec:
   serviceName: filebeat-logstash-headless
   selector:
@@ -50,7 +28,6 @@ spec:
       app: "filebeat-logstash"
       release: "filebeat"
   replicas: 1
-  podManagementPolicy: Parallel
   updateStrategy:
     type: RollingUpdate
   template:
@@ -58,24 +35,10 @@ spec:
       name: "filebeat-logstash"
       labels:
         app: "filebeat-logstash"
-        chart: "logstash"
-        heritage: "Helm"
-        release: "filebeat"
-      annotations:
     spec:
       securityContext:
         fsGroup: 1000
         runAsUser: 1000
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - "filebeat-logstash"
-            topologyKey: kubernetes.io/hostname
       terminationGracePeriodSeconds: 120
       volumes:
       containers:
@@ -112,10 +75,10 @@ spec:
         resources:
           limits:
             cpu: 1000m
-            memory: 1536Mi
+            memory: 1Gi
           requests:
             cpu: 100m
-            memory: 1536Mi
+            memory: 1Gi
         env:
           - name: LS_JAVA_OPTS
             value: "-Xmx1g -Xms1g"
