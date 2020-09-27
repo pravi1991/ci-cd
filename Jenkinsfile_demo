@@ -28,5 +28,6 @@ pipeline {
     post {
         always{
             xunit thresholds: [failed(unstableNewThreshold: '60', unstableThreshold: '60')], tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: true, pattern: 'result.xml', skipNoTestFiles: true, stopProcessingIfError: true)]
+        }
     }
 }
