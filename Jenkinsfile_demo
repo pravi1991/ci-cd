@@ -12,9 +12,8 @@ pipeline {
                 git credentialsId: 'GIT_CREDS', url: 'https://github.com/pravi1991/ci-cd.git'            
                 script {
                     sh "pipenv install"
-                    sh 'checklist=`cat tests/terratest/check_list.txt`'
                     sh "pipenv run pip install checkov"
-                    sh "pipenv run checkov -d k8s-manifests -o junitxml -c $checklist > result.xml || true"
+                    sh "pipenv run checkov -d k8s-manifests -o junitxml -c `cat tests/terratest/check_list.txt` > result.xml || true"
                     junit "result.xml"
                 }
 
