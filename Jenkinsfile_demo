@@ -27,6 +27,6 @@ pipeline {
     }
     post {
         always{
-            junit allowEmptyResults: true, healthScaleFactor: 0.1, testResults: 'result.xml'        }
+            xunit thresholds: [failed(unstableNewThreshold: '60', unstableThreshold: '60')], tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: true, pattern: 'result.xml', skipNoTestFiles: true, stopProcessingIfError: true)]
     }
 }
