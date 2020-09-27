@@ -1,4 +1,5 @@
-pipeline {
+pipeline 
+{
     agent any
     stages 
     {
@@ -39,6 +40,9 @@ pipeline {
                 }
                 stage('Infrastructure testing')
                 {
+                    steps {
+                        echo 'infra test'
+                    }
 
                 }
             }
@@ -52,7 +56,6 @@ pipeline {
                     }
                 }
             }
-        }
         stage('Post Tests') 
         {
             stage('Perfomance Testing') 
@@ -66,7 +69,7 @@ pipeline {
                         unstash 'elk'
                         bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=30001 -report' 
                     }
+                }
             }
         }
-    }
 }
