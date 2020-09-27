@@ -20,8 +20,8 @@ func TestKubernetesHelloWorldExample(t *testing.T) {
 
 	k8s.KubectlApply(t, options, kubeResourcePath)
 
-	k8s.WaitUntilServiceAvailable(t, options, "hello-world-service", 10, 1*time.Second)
-	service := k8s.GetService(t, options, "hello-world-service")
+	k8s.WaitUntilServiceAvailable(t, options, "elasticsearch-logging", 10, 1*time.Second)
+	service := k8s.GetService(t, options, "elasticsearch-logging")
 	url := fmt.Sprintf("http://%s", k8s.GetServiceEndpoint(t, options, service, 5000))
 
 	http_helper.HttpGetWithRetry(t, url, nil, 200, "Hello world!", 30, 3*time.Second)

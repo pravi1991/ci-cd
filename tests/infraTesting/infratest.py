@@ -14,5 +14,5 @@ def test_es(kube):
     assert len(pods) == 1, 'pods should deploy with three replicas'
     for pod in pods:
         resp = pod.http_proxy_get('/_cluster/health?local=true')
-        assert 'green' in dict(resp.data)['status']
+        assert 'green' in resp.data
     kube.delete(elasticsearch_sts)
