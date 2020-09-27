@@ -114,5 +114,4 @@ spec:
         env:
           - name: LS_JAVA_OPTS
             value: "-Xmx1g -Xms1g"
-        volumeMounts:
 
