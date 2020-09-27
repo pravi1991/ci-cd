@@ -7,7 +7,10 @@ import pytest
 def test_es(kube):
     kube.wait_for_registered()
     sts = kube.get_statefulsets('monitoring')
+    service = kube.get_services('monitoring')
+    elastic_service = service.get('elasticsearch-logging')
     elasticsearch_sts = sts.get('elasticsearch-master')
+    assert elastic_service is not None
     assert elasticsearch_sts is not None
     pods = elasticsearch_sts.get_pods()
     # assert len(pods) == 3, 'pods should deploy with three replicas'
