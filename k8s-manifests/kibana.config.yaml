@@ -1,8 +1,7 @@
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: infra
+  namespace: monitoring
   name: kibana-config
   labels:
     app: kibana
@@ -13,4 +12,3 @@ data:
       hosts: ${ELASTICSEARCH_HOSTS}
       username: ${ELASTICSEARCH_USER}
       password: ${ELASTICSEARCH_PASSWORD}
----
