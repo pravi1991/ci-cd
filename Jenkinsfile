@@ -10,21 +10,28 @@ pipeline {
             }
         stage('Pre TESTS'){
             parallel {
-                stage('Static code analysis'){
-                    agent { label 'slave' }
-                    steps {
-                        unstash 'elk'
-                        //sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'
-                        sh 'kube-score score --help'
-                        //sh 'ls manifest'    
-                    }
-                    post {
-                        success {
-                            echo 'ran static code analysis successfully'
-                        }
-                        failure {
-                            echo 'static code failed'
-                        }
+                # stage('Static code analysis'){
+                #     agent { label 'slave' }
+                #     steps {
+                #         unstash 'elk'
+                #         //sh 'kube-score score manifests/elasticsearch.yaml --output-format ci'
+                #         sh 'kube-score score --help'
+                #         //sh 'ls manifest'    
+                #     }
+                #     post {
+                #         success {
+                #             echo 'ran static code analysis successfully'
+                #         }
+                #         failure {
+                #             echo 'static code failed'
+                #         }
+                #     }
+                # }
+                agent {
+                    docker {
+                        image 'kennethreitz/pipenv:latest'
+                        args '-u root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
+                        label 'agent'
                     }
                 }
             }
