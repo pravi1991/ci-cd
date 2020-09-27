@@ -34,8 +34,8 @@ rules:
     message: Resource request or limits not enabled
     resource: StatefulSet
     assertions:
-      - not:
-        - key: spec.template.spec.containers[].image 
+      # - not:
+        - key: kind
           op: absent
         # value: StatefulSet
     #   - key: spec.template.spec.containers.resources.limits.memory

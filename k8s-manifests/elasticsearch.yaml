@@ -30,15 +30,16 @@ spec:
     spec:
       serviceAccountName: elasticsearch-logging
       containers:
-      # - image: docker.elastic.co/elasticsearch/elasticsearch:7.9.1
+      - image: docker.elastic.co/elasticsearch/elasticsearch:7.9.1
+        imagePullPolicy: Always
         name: elasticsearch-logging
         resources:
           limits:
             cpu: 1000m
             memory: 1Gi
           requests:
-            cpu: 100m
-            memory: 512M
+            cpu: 1000m
+            memory: 1Gi
         ports:
         - containerPort: 9200 
           name: db
@@ -119,7 +120,6 @@ metadata:
   labels:
     app: elasticsearch-logging
 spec:
-  type: NodePort
   ports:
   - port: 9200
     protocol: TCP
