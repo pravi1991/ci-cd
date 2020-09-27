@@ -26,7 +26,7 @@ pipeline {
     }
     post {
         always {
-            cucumber fileIncludePattern: 'report.json', sortingMethod: 'ALPHABETICAL'            
+            cucumber fileIncludePattern: 'result.json', sortingMethod: 'ALPHABETICAL'            
         }
     }
 }
