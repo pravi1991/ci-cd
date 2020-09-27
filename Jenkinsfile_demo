@@ -27,7 +27,7 @@ pipeline {
     post {
         always {
             // cucumber fileIncludePattern: 'result.json', sortingMethod: 'ALPHABETICAL'            
-            junit 
+            junit allowEmptyResults: true, healthScaleFactor: 0.01, testResults: 'result.xml'
         }
     }
 }
