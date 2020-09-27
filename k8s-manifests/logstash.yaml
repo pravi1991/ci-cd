@@ -51,6 +51,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: filebeat-logstash
+  namespace: monitoring
   labels:
     app: "filebeat-logstash"
 spec:
@@ -58,7 +59,6 @@ spec:
   selector:
     matchLabels:
       app: "filebeat-logstash"
-      release: "filebeat"
   replicas: 1
   updateStrategy:
     type: RollingUpdate

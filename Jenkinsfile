@@ -41,9 +41,17 @@ pipeline {
                         bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=30001 -report' 
                     }
                 }
-                stage('Infrastructure testing') {
+                stage('Infrastructure testing') {    
                     steps {
-                        echo 'infra test'
+                        unstash 'elk'
+                        withKubeConfig(credentialsId: 'mykube') {
+                            script {
+                                sh "pipenv install"
+                                sh "pipenv run pip install kubetest"
+                                sh "pytest -s  -o junit_logging=all --junit-xml infrareport.xml || true"
+                                junit 'infrareport.xml'
+                            }
+                        }
                     }
                 }
             }
@@ -52,8 +60,7 @@ pipeline {
             steps {
                 withKubeConfig(credentialsId: 'mykube') {
                     unstash 'elk'
-                    echo env.WORKSPACE
-                    sh 'ls -la'
+                    sh 'scripts/check-service.sh'
                 }
             }
         }
