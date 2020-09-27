@@ -27,6 +27,5 @@ pipeline {
     }
     post {
         always{
-xunit thresholds: [failed(failureNewThreshold: '85', failureThreshold: '80', unstableNewThreshold: '65', unstableThreshold: '60')], tools: [JUnit(deleteOutputFiles: true, failIfNotNew: true, pattern: 'resutl.xml', skipNoTestFiles: false, stopProcessingIfError: true)]        }
-    }
+            xunit thresholds: [failed(failureNewThreshold: '85', failureThreshold: '80', unstableNewThreshold: '65', unstableThreshold: '60')], tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: true, pattern: 'result.xml', skipNoTestFiles: true, stopProcessingIfError: true)]    }
 }
