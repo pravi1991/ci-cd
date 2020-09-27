@@ -36,6 +36,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: "filebeat-logstash-headless"
+  namespace: monitoring
   labels:
     app: "filebeat-logstash"
 spec:
@@ -46,7 +47,6 @@ spec:
     - name: http
       port: 9600
 ---
-# Source: logstash/templates/statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -72,7 +72,6 @@ spec:
         fsGroup: 1000
         runAsUser: 1000
       terminationGracePeriodSeconds: 120
-      volumes:
       containers:
       - name: "logstash"
         securityContext:
