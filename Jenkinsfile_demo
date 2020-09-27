@@ -27,7 +27,6 @@ pipeline {
     }
     post {
         always{
-            junit 'result.xml'
-        }
+            junit allowEmptyResults: true, healthScaleFactor: 30.0, testResults: 'result.xml'        }
     }
 }
