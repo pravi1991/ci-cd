@@ -53,15 +53,20 @@ pipeline {
                 }
             }
         }
-        stage('Post Tests') {
-            stage('Perfomance Testing') {
-                    agent {
+        stage('Post Tests') 
+        {
+            stage('Perfomance Testing') 
+            {
+                    agent 
+                    {
                         label 'slave'
                     }
-                    steps {
+                    steps 
+                    {
                         unstash 'elk'
                         bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=30001 -report' 
                     }
-                }
+            }
         }
     }
+}
