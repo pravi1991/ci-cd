@@ -13,7 +13,7 @@ pipeline {
                 script {
                     sh "pipenv install"
                     sh "pipenv run pip install checkov"
-                    sh "pipenv run checkov -d k8s-manifests -o junitxml -c `cat tests/terratest/check_list.txt` > result.xml || true"
+                    sh "pipenv run checkov -d k8s-manifests -o json -c `cat tests/terratest/check_list.txt` > result.json || true"
                 }
 
             }
@@ -26,7 +26,7 @@ pipeline {
     }
     post {
         always {
-            xunit thresholds: [failed(failureNewThreshold: '85', failureThreshold: '80', unstableNewThreshold: '65', unstableThreshold: '60')], tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: true, pattern: 'result.xml', skipNoTestFiles: true, stopProcessingIfError: true)]    
+            cucumber fileIncludePattern: 'report.json', sortingMethod: 'ALPHABETICAL'            
         }
     }
 }
