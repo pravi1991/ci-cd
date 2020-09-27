@@ -22,7 +22,7 @@ pipeline {
     options {
         preserveStashes()
         timestamps()
-        ansiColor('xterm')
+        // ansiColor('xterm')
     }
     post {
         always {
