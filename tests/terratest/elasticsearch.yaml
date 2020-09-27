@@ -30,7 +30,7 @@ spec:
     spec:
       serviceAccountName: elasticsearch-logging
       containers:
-      # - image: docker.elastic.co/elasticsearch/elasticsearch:7.9.1
+      - image: docker.elastic.co/elasticsearch/elasticsearch:7.9.1
         name: elasticsearch-logging
         resources:
           limits:
@@ -119,7 +119,6 @@ metadata:
   labels:
     app: elasticsearch-logging
 spec:
-  type: NodePort
   ports:
   - port: 9200
     protocol: TCP

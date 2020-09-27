@@ -1,6 +1,3 @@
-// +build kubeall kubernetes
-// NOTE: See the notes in the other Kubernetes example tests for why this build tag is included.
-
 package test
 
 import (

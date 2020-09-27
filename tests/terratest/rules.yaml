@@ -4,13 +4,61 @@ type: Kubernetes
 files:
   - "*.yaml"
 rules:
+  # - id: SERVICE_TYPE
+  #   severity: FAILURE
+  #   message: Service should not have NodePort
+  #   resource: Service
+  #   assertions:
+  #     - key: spec.type
+  #       op: eq
+  #       value: NodePort
+  #   tags: 
+  #   - service
+  #   - nodeport
+    
+  # - id: ROLLING_UPDATE
+  #   severity: FAILURE
+  #   message: Rolling update is necessary to update
+  #   resource: StatefulSet
+  #   assertions:
+  #     - key: spec.UpdateStrategy
+  #       op: eq
+  #       value: RollingUpdate
+  #   tags: 
+  #   - deployments
+  #   - statefulset 
+  #   - rollingupdate
 
-  - id: SERVICE_TYPE
+  - id: Request_and_Limits
     severity: FAILURE
-    message: Service should not have NodePort
-    resource: Service
+    message: Resource request or limits not enabled
+    resource: StatefulSet
     assertions:
-      - key: spec.type
-        op: ne
-        value: NodePort
-
+      - not:
+        - key: spec.template.spec.containers[].image 
+          op: absent
+        # value: StatefulSet
+    #   - key: spec.template.spec.containers.resources.limits.memory
+    #     op: absent
+    #   - key: spec.template.spec.containers.resources.requests.cpu
+    #     op: absent
+    #   - key: spec.template.spec.containers.resources.requests.memory
+    #     op: absent
+    tags: 
+    - deployments
+    - statefulset 
+    - requests_limits
+    
+  # - id: Liveness_probe
+  #   severity: FAILURE
+  #   message: Liveness probe not present
+  #   resources: 
+  #   - Statefulset
+  #   - Deployment
+  #   assertions:
+  #     - key: spec.template.spec.containers.resources.limits.cpu
+  #       op: present
+  #   tags: 
+  #   - deployments
+  #   - statefulset 
+  #   - requests_limits
