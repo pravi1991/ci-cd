@@ -36,11 +36,13 @@ pipeline {
                 unstash 'elk'
                 withKubeConfig(credentialsId: 'mykube') {
                     script {
-                        sh 'scripts/init.sh'
-                        sh "pipenv install"
-                        sh "pipenv run pip install kubetest"
-                        sh "pytest -s -o junit_logging=all --junit-xml infrareport-elastic.xml  tests/infraTesting/ || true"
-                        junit 'infrareport*.xml'
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'scripts/init.sh'
+                            sh "pipenv install"
+                            sh "pipenv run pip install kubetest"
+                            sh "pytest -s -o junit_logging=all --junit-xml infrareport-elastic.xml  tests/infraTesting/ || true"
+                            junit 'infrareport*.xml'
+                        }
                     }
                 }
             }
