@@ -21,3 +21,26 @@ This triggers the Jenkins pipeline from the [Jenkinsfile](Jenkinsfile) and first
             }
         }
 ```
+Next stage is to do the static analysis of the code. For this I am using a tool called `checkov`. It can be installed uisng pip
+```python
+pip3 install checkov
+```groovy
+stage('STATIC CODE ANALYSIS') {
+            agent {
+                docker {
+                    image 'kennethreitz/pipenv:latest'
+                    args '-u root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
+                    label 'slave'
+                }
+            }
+            steps {
+                unstash 'elk'
+                script {
+                    sh "pipenv install" 
+                    sh "pipenv run pip install checkov"
+                    sh "pipenv run checkov --framework kubernetes -d k8s-manifests -o junitxml -c `cat tests/staticAnalysis/check_list.txt` > result.xml || true"
+                }
+            }
+        }
+```
+In here I am making use of a worker node labeled as `slave` and I am running a docker container here to run a clean test. So once the test is complete then there won't be any leftovers. The results of the stage is captured in `junit xml` format.
