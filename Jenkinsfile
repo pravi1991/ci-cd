@@ -68,7 +68,7 @@ pipeline {
         }
         stage('Deployments') {
             steps {
-                withKubeConfig(credentialsId: 'mykube') {
+                withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
                     unstash 'elk'
                     sh 'scripts/check_and_update.sh'
                 }
