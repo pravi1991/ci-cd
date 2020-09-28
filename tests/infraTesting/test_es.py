@@ -6,7 +6,7 @@ def kubeconfig():
 @pytest.mark.applymanifest('k8s-manifests/elasticsearch.config.yaml')
 @pytest.mark.applymanifest('k8s-manifests/readiness.elastic.cm.yaml')
 @pytest.mark.applymanifest('k8s-manifests/elasticsearch.yaml')
-def elatic_infratest(kube):
+def test_es(kube):
     kube.wait_for_registered()
     sts = kube.get_statefulsets('monitoring')
     service = kube.get_services('monitoring')
