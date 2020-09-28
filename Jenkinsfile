@@ -36,7 +36,7 @@ pipeline {
                 unstash 'elk'
                 script {
                     try {
-                        sh 'scripts/init.sh'
+                        sh 'kubectl get pods'
                         sh "pipenv install"
                         sh "pipenv run pip install kubetest"
                         sh "pytest -s -o junit_logging=all --junit-xml infrareport-elastic.xml  tests/infraTesting/ || true"
