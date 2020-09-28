@@ -5,3 +5,5 @@ for i in {0..2} ; do
  done
 kubectl apply -f setup.yaml
 kubectl apply -f k8s-manifests/elastic.secret.password.yaml
+
+kubectl port-forward -n monitoring svc/elasticsearch-logging --address 0.0.0.0 9200:9200

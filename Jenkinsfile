@@ -30,31 +30,30 @@ pipeline {
                 }
             }
         }
-        stage('TESTS') {
-            stage('Infrastructure testing') {    
-                steps {
-                    unstash 'elk'
-                    sh 'scripts/init.sh'
-                    withKubeConfig(credentialsId: 'mykube') {
-                        script {
-                            sh "pipenv install"
-                            sh "pipenv run pip install kubetest"
-                            sh "pytest -s  -o junit_logging=all --junit-xml infrareport.xml || true"
-                            junit 'infrareport.xml'
-                        }
+    
+        stage('Infrastructure testing') {    
+            steps {
+                unstash 'elk'
+                sh 'scripts/init.sh'
+                withKubeConfig(credentialsId: 'mykube') {
+                    script {
+                        sh "pipenv install"
+                        sh "pipenv run pip install kubetest"
+                        sh "pytest -s  -o junit_logging=all --junit-xml infrareport.xml || true"
+                        junit 'infrareport.xml'
                     }
                 }
-            stage('Perfomance Testing') {
-                agent {
-                    label 'slave'
-                }
-                steps {
-                    unstash 'elk'
-                    bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=9200 -report' 
-                }
             }
+        stage('Perfomance Testing') {
+            agent {
+                label 'slave'
             }
-        
+            steps {
+                unstash 'elk'
+                bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=9200 -report' 
+            }
+        }
+    
         }
         stage('Deployments') {
             steps {
