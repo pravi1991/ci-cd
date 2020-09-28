@@ -39,7 +39,7 @@ pipeline {
                     script {
                         sh "pipenv install"
                         sh "pipenv run pip install kubetest"
-                        sh "pytest -s -o junit_logging=all --junit-xml infrareport-elastic.xml -c tests/infraTesting/elastic_infratest.py || true"
+                        sh "pytest -s -o junit_logging=all --junit-xml infrareport-elastic.xml  tests/infraTesting/ || true"
                         junit 'infrareport*.xml'
                     }
                 }
