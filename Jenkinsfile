@@ -44,7 +44,6 @@ pipeline {
                         }
                     }
                 }
-            
             stage('Perfomance Testing') {
                 agent {
                     label 'slave'
