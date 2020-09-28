@@ -33,12 +33,17 @@ pipeline {
         stage('TESTS') {
             parallel {
                 stage('Perfomance Testing') {
+                    steps { 
+                        withKubeConfig(credentialsId: 'mykube') {
+                            sh 'kubectl port-forward svc/elasticsearch-logging -n monitoring --address 0.0.0.0 9200:9200'
+                        }
+                    }
                     agent {
                         label 'slave'
                     }
                     steps {
                         unstash 'elk'
-                        bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=30001 -report' 
+                        bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=9200 -report' 
                     }
                 }
                 stage('Infrastructure testing') {    
