@@ -34,7 +34,7 @@ pipeline {
             stage('Infrastructure testing') {    
                 steps {
                     unstash 'elk'
-                    sh 'init.sh'
+                    sh 'scripts/init.sh'
                     withKubeConfig(credentialsId: 'mykube') {
                         script {
                             sh "pipenv install"
@@ -64,6 +64,11 @@ pipeline {
                     sh 'scripts/check-service.sh'
                 }
             }
+        }
+    }
+    post {
+        always {
+            sh 'scripts/cleanup.sh'
         }
     }
 }
