@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('CHECKOUT') {
             steps {
-                checkout scm
+                // checkout scm
                 git credentialsId: 'GIT_CREDS', url: 'https://github.com/pravi1991/ci-cd.git'            
                 stash 'elk'
             }
@@ -37,16 +37,21 @@ pipeline {
                 withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
                     sh 'scripts/init.sh'
                    
-               }
+              }
                 script {
                     try {
-                        sh "pipenv install"
-                        sh "pipenv run pip install kubetest"
-                        sh "pytest -s -o junit_logging=all --junit-xml infrareport-elastic.xml  tests/infraTesting/ || true"
-                        junit 'infrareport*.xml'
+                        // sh "pipenv install"
+                        // sh "pipenv run pip install kubetest"
+                        // junit 'infrareport*.xml'
+                        withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
+                            sh 'kubectl config view > ~/.kube/kubeconfig'
+                            sh "pytest -s --kube-config=~/.kube/kubeconfig -o junit_logging=all --junit-xml infrareport-elastic.xml  tests/infraTesting/ || true"
+                            sh 'kubectl port-forward -n monitoring svc/elasticsearch-logging --address 0.0.0.0 9200:9200 & '
+                            sh 'kubectl port-forward -n monitoring svc/kibana --address 0.0.0.0 5601:80 & '
+                        }
                     }
                     catch (exc) {
-                        echo $currentBuild.result
+                        echo 'pass'
                     }
                 }
             }
@@ -56,10 +61,7 @@ pipeline {
                 label 'slave'
             }
             steps { 
-                withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
-                    sh 'kubectl port-forward -n monitoring svc/elasticsearch-logging --address 0.0.0.0 9200:9200'
-                    sh 'kubectl port-forward -n monitoring svc/kibana --address 0.0.0.0 5601:80'
-                }
+
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     unstash 'elk'
                     bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=9200 -report' 
