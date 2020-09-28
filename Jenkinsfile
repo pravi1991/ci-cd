@@ -24,7 +24,7 @@ pipeline {
             steps {
                 unstash 'elk'
                 script {
-                    sh "pipenv install"
+                    sh "pipenv install" 
                     sh "pipenv run pip install checkov"
                     sh "pipenv run checkov --framework kubernetes -d k8s-manifests -o junitxml -c `cat tests/staticAnalysis/check_list.txt` > result.xml || true"
                 }
