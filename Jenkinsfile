@@ -34,39 +34,42 @@ pipeline {
         stage('Infrastructure testing') {    
             steps {
                 unstash 'elk'
+                withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
+                    sh 'scripts/init.sh'
+                   
+               }
                 script {
                     try {
-                        sh 'kubectl get pods'
                         sh "pipenv install"
                         sh "pipenv run pip install kubetest"
                         sh "pytest -s -o junit_logging=all --junit-xml infrareport-elastic.xml  tests/infraTesting/ || true"
                         junit 'infrareport*.xml'
                     }
                     catch (exc) {
-                        echo 'Testing $currentBuild.result'
+                        echo $currentBuild.result
                     }
                 }
             }
         }    
-        // stage('Perfomance Testing') {
-        //     agent {
-        //         label 'slave'
-        //     }
-        //     steps {                
-        //         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-        //             unstash 'elk'
-        //             bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=9200 -report' 
-        //         }
-        //     }
-        // }
-        // stage('Deployments') {
-        //     steps {
-        //         withKubeConfig(credentialsId: 'mykube') {
-        //             unstash 'elk'
-        //             sh 'scripts/check_and_update.sh'
-        //         }
-        //     }
-        // }
+        stage('Perfomance Testing') {
+            agent {
+                label 'slave'
+            }
+            steps {                
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    unstash 'elk'
+                    bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=9200 -report' 
+                }
+            }
+        }
+        stage('Deployments') {
+            steps {
+                withKubeConfig(credentialsId: 'mykube') {
+                    unstash 'elk'
+                    sh 'scripts/check_and_update.sh'
+                }
+            }
+        }
     }
     post {
         always {
