@@ -60,7 +60,7 @@ pipeline {
             steps {
                 withKubeConfig(credentialsId: 'mykube') {
                     unstash 'elk'
-                    sh 'scripts/check-service.sh'
+                    sh 'scripts/check_and_update.sh'
                 }
             }
         }
