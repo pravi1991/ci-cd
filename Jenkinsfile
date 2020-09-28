@@ -70,7 +70,7 @@ pipeline {
     }
     post {
         always {
-            sh 'scripts/cleanup.sh'
+            sh 'ls'
         }
     }
 }
