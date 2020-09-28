@@ -79,7 +79,7 @@ pipeline {
     }
     post {
         always {
-            sh 'ls'
+            junit '*.xml'
         }
     }
 }
