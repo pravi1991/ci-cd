@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: monitoring
   name: kibana
+  namespace: monitoring
   labels:
     app: kibana
 spec:
@@ -17,8 +17,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: monitoring
   name: kibana
+  namespace: monitoring
   labels:
     app: kibana
 spec:
@@ -31,7 +31,6 @@ spec:
       labels:
         app: kibana
     spec:
-      priorityClassName: high
       containers:
       - name: kibana
         image: docker.elastic.co/kibana/kibana:7.3.0

@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: monitoring
   name: elasticsearch-master-config
+  namespace: monitoring
   labels:
     app: elasticsearch
     role: master

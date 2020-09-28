@@ -47,51 +47,15 @@ roleRef:
   name: elasticsearch-logging
   apiGroup: ""
 ---
+
 apiVersion: v1
-kind: List
-items:
-- apiVersion: v1
-  kind: ResourceQuota
-  metadata:
-    name: pods-high
-    namespace: monitoring
-  spec:
-    hard:
-      cpu: "3000"
-      memory: 20Gi
-      pods: "10"
-    scopeSelector:
-      matchExpressions:
-      - operator : In
-        scopeName: PriorityClass
-        values: ["high"]
-- apiVersion: v1
-  kind: ResourceQuota
-  metadata:
-    name: pods-medium
-    namespace: monitoring
-  spec:
-    hard:
-      cpu: "1000"
-      memory: 10Gi
-      pods: "10"
-    scopeSelector:
-      matchExpressions:
-      - operator : In
-        scopeName: PriorityClass
-        values: ["medium"]
-- apiVersion: v1
-  kind: ResourceQuota
-  metadata:
-    name: pods-low
-    namespace: monitoring
-  spec:
-    hard:
-      cpu: "500"
-      memory: 5Gi
-      pods: "10"
-    scopeSelector:
-      matchExpressions:
-      - operator : In
-        scopeName: PriorityClass
-        values: ["low"]
+kind: ResourceQuota
+metadata:
+  name: pods-high
+  namespace: monitoring
+spec:
+  hard:
+    cpu: "3000"
+    memory: 20Gi
+    pods: "10"
+
