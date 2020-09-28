@@ -54,9 +54,11 @@ pipeline {
             agent {
                 label 'slave'
             }
-            steps {
-                unstash 'elk'
-                bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=9200 -report' 
+            steps {                
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    unstash 'elk'
+                    bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=9200 -report' 
+                }
             }
         }
         stage('Deployments') {
