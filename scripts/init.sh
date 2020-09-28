@@ -1,5 +1,6 @@
 #!/bin/bash
 alias kubectl='kubectl --kubeconfig ~/.kube/kubeconfig'
+kubectl 
 echo "CREATING PERSISTENT VOLUMES"
 for i in {0..2} ; do 
     number=$i envsubst < k8s-manifests/minikube-pv.yaml| kubectl apply -f -
