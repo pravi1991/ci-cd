@@ -8,12 +8,11 @@ def kubeconfig():
 @pytest.mark.applymanifest('k8s-manifests/readiness.kibana.cm.yaml')
 @pytest.mark.applymanifest('k8s-manifests/kibana.yaml')
 def test_kibana(kube):
-    kube.wait_until_created()
-    deploy = kube.get_statefulsets('monitoring')
+    kube.wait_for_registered()
+    deploy = kube.get_deployments('monitoring')
     service = kube.get_services('monitoring')
     kibana_service = service.get('kibana')
     kibana_deploy = deploy.get('kibana')
-    kube.wait_for_registered()
     assert kibana_service is not None
     assert kibana_deploy is not None
     pods = kibana_deploy.get_pods()
