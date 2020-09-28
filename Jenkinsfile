@@ -46,8 +46,8 @@ pipeline {
                         withCredentials([kubeconfigFile(credentialsId: 'KUBECONFIG', variable: 'KUBECONFIG')]) {
                             sh 'kubectl config view > ~/.kube/kubeconfig'
                             sh "pytest -s --kube-config=~/.kube/kubeconfig -o junit_logging=all --junit-xml infrareport-elastic.xml  tests/infraTesting/ || true"
-                            sh 'kubectl port-forward -n monitoring svc/elasticsearch-logging --address 0.0.0.0 9200:9200 & '
-                            sh 'kubectl port-forward -n monitoring svc/kibana --address 0.0.0.0 5601:80 & '
+                            sh 'kubectl apply -n monitoring patch/elastic_svc_patch.yaml'
+                            sh 'kubectl apply -n monitoring  patch/kibana_svc_patch.yaml'
                         }
                     }
                     catch (exc) {
