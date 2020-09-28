@@ -19,3 +19,4 @@ def test_es(kube):
         resp = pod.http_proxy_get('/_cluster/health?local=true')
         assert 'green' in resp.data
     kube.delete(elasticsearch_sts)
+

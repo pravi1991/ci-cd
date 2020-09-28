@@ -1,0 +1,13 @@
+kind: PersistentVolume
+metadata:
+  name: task-pv-volume-${number}
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 3Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
