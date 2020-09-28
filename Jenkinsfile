@@ -34,18 +34,16 @@ pipeline {
         stage('Infrastructure testing') {    
             steps {
                 unstash 'elk'
-                withKubeConfig(credentialsId: 'mykube') {
-                    script {
-                        try {
-                            sh 'scripts/init.sh'
-                            sh "pipenv install"
-                            sh "pipenv run pip install kubetest"
-                            sh "pytest -s -o junit_logging=all --junit-xml infrareport-elastic.xml  tests/infraTesting/ || true"
-                            junit 'infrareport*.xml'
-                        }
-                        catch (exc) {
-                            echo 'Testing $currentBuild.result'
-                        }
+                script {
+                    try {
+                        sh 'scripts/init.sh'
+                        sh "pipenv install"
+                        sh "pipenv run pip install kubetest"
+                        sh "pytest -s -o junit_logging=all --junit-xml infrareport-elastic.xml  tests/infraTesting/ || true"
+                        junit 'infrareport*.xml'
+                    }
+                    catch (exc) {
+                        echo 'Testing $currentBuild.result'
                     }
                 }
             }
