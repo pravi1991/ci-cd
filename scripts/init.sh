@@ -5,10 +5,3 @@ for i in {0..2} ; do
  done
 kubectl apply -f setup.yaml
 kubectl apply -f k8s-manifests/elastic.secret.password.yaml
-# kubectl apply -f
-# kubectl apply -f
-# kubectl apply -f
-# kubectl apply -f
-# kubectl apply -f
-# kubectl apply -f
-# kubectl apply -f
