@@ -31,6 +31,7 @@ label_filebeat='filebeat'
 label_logstash='logstash'
 
 # check for resource status
+kubectl apply -f k8s-manifests/
 
 for item in $(git diff-tree --no-commit-id --name-only -r `git rev-parse HEAD`); do
     if [ $cm_elastic == $item ]; then 
