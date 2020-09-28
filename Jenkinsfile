@@ -48,25 +48,25 @@ pipeline {
                 }
             }
         }    
-        stage('Perfomance Testing') {
-            agent {
-                label 'slave'
-            }
-            steps {                
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    unstash 'elk'
-                    bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=9200 -report' 
-                }
-            }
-        }
-        stage('Deployments') {
-            steps {
-                withKubeConfig(credentialsId: 'mykube') {
-                    unstash 'elk'
-                    sh 'scripts/check_and_update.sh'
-                }
-            }
-        }
+        // stage('Perfomance Testing') {
+        //     agent {
+        //         label 'slave'
+        //     }
+        //     steps {                
+        //         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        //             unstash 'elk'
+        //             bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=9200 -report' 
+        //         }
+        //     }
+        // }
+        // stage('Deployments') {
+        //     steps {
+        //         withKubeConfig(credentialsId: 'mykube') {
+        //             unstash 'elk'
+        //             sh 'scripts/check_and_update.sh'
+        //         }
+        //     }
+        // }
     }
     post {
         always {
