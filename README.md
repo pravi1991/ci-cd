@@ -45,4 +45,4 @@ stage('STATIC CODE ANALYSIS') {
 ```
 In here I am making use of a worker node labeled as `slave` and I am running a docker container here to run a clean test. So once the test is complete then there won't be any leftovers. The results of the stage is captured in `junit xml` format.
 
-In the next stage `Infrastructure Testing` stage where I have again used [kubetest]() tool. This is a python based tool
+In the next stage `Infrastructure Testing` stage where I have again used [kubetest]() tool. This is a python based tool with which we can spinup the manifest to the given kubernetes cluster and then perform the tests written in python file. The directory [infraTesting](tests/infraTesting) contains the file to test the
