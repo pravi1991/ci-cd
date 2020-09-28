@@ -26,7 +26,7 @@ pipeline {
                 script {
                     sh "pipenv install"
                     sh "pipenv run pip install checkov"
-                    sh "pipenv run checkov --framework kubernetes -d k8s-manifests -c `cat tests/staticAnalysis/check_list.txt` > result.xml || true"
+                    sh "pipenv run checkov --framework kubernetes -d k8s-manifests -o junitxml -c `cat tests/staticAnalysis/check_list.txt` > result.xml || true"
                 }
             }
         }
@@ -36,12 +36,15 @@ pipeline {
                 unstash 'elk'
                 withKubeConfig(credentialsId: 'mykube') {
                     script {
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        try {
                             sh 'scripts/init.sh'
                             sh "pipenv install"
                             sh "pipenv run pip install kubetest"
                             sh "pytest -s -o junit_logging=all --junit-xml infrareport-elastic.xml  tests/infraTesting/ || true"
                             junit 'infrareport*.xml'
+                        }
+                        catch (exc) {
+                            echo 'Testing $currentBuild.result'
                         }
                     }
                 }
