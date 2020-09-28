@@ -8,4 +8,4 @@ Here the [github repo](https://github.com/pravi1991/ci-cd.git)
 
 ### Steps
 I am using Jenkins Declrative Pipeli syntax. 
-My jenkins setup has a master and a worker node setup in Google Cloud Platform.
+My jenkins setup has a master and a worker node setup in Google Cloud Platform using terraform ([resource template](infra/gcp.tf))
