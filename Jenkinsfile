@@ -44,7 +44,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }    
         stage('Perfomance Testing') {
             agent {
                 label 'slave'
@@ -53,8 +53,6 @@ pipeline {
                 unstash 'elk'
                 bzt 'tests/perfomance-test/bzt-elastic.yaml -o modules.jmeter.properites.eshostname=34.105.25.200 -o modules.jmeter.properites.esport=9200 -report' 
             }
-        }
-    
         }
         stage('Deployments') {
             steps {
