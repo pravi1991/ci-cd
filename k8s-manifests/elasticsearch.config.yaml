@@ -13,7 +13,7 @@ data:
     node.name: ${NODE_NAME}
     discovery.seed_hosts: ${NODE_LIST}
     cluster.initial_master_nodes: ${MASTER_NODES}
-    network.host: 0.0.0.0
+    network.host: 0.0.0.0 
     xpack.security.enabled: false
     node:
       master: true
