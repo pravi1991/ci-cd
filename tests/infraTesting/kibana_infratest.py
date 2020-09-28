@@ -7,7 +7,7 @@ def kubeconfig():
 @pytest.mark.applymanifest('k8s-manifests/kibana.config.yaml')
 @pytest.mark.applymanifest('k8s-manifests/readiness.kibana.cm.yaml')
 @pytest.mark.applymanifest('k8s-manifests/kibana.yaml')
-def test_kibana(kube):
+def kibana_infratest(kube):
     kube.wait_for_registered()
     deploy = kube.get_deployments('monitoring')
     service = kube.get_services('monitoring')
