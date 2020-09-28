@@ -73,10 +73,10 @@ spec:
         resources:
           limits:
             cpu: 400m
-            memory: 1Gi
+            memory: 200M
           requests:
             cpu: 100m
-            memory: 1Gi
+            memory: 200M
         env:
           - name: LS_JAVA_OPTS
             value: "-Xmx1g -Xms1g"

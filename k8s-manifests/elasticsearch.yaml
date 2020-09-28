@@ -35,11 +35,11 @@ spec:
         name: elasticsearch-logging
         resources:
           limits:
-            cpu: 800m
-            memory: 1Gi
+            cpu: 500m
+            memory: 500M
           requests:
             cpu: 500m
-            memory: 1Gi
+            memory: 500M
         ports:
         - containerPort: 9200 
           name: db

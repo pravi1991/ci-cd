@@ -6,8 +6,6 @@ The architecture diagram is as shown below
 
 Here the [github repo](https://github.com/pravi1991/ci-cd.git)
 
-Issue with kubernetes continuous deployment plugin
-https://issues.jenkins-ci.org/browse/JENKINS-62995
-
-docker overlay filesystem full
-https://stackoverflow.com/questions/31712266/how-to-clean-up-docker-overlay-directory
+### Steps
+I am using Jenkins Declrative Pipeli syntax. 
+My jenkins setup has a master and a worker node setup in Google Cloud Platform.
