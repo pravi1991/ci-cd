@@ -13,23 +13,23 @@ pipeline {
                 stash 'elk'
             }
         }
-        // stage('STATIC CODE ANALYSIS') {
-        //     agent {
-        //         docker {
-        //             image 'kennethreitz/pipenv:latest'
-        //             args '-u root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
-        //             label 'slave'
-        //         }
-        //     }
-        //     steps {
-        //         unstash 'elk'
-        //         script {
-        //             sh "pipenv install"
-        //             sh "pipenv run pip install checkov"
-        //             sh "pipenv run checkov --framework kubernetes -d k8s-manifests -o junitxml -c `cat tests/staticAnalysis/check_list.txt` > result.xml || true"
-        //         }
-        //     }
-        // }
+        stage('STATIC CODE ANALYSIS') {
+            agent {
+                docker {
+                    image 'kennethreitz/pipenv:latest'
+                    args '-u root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
+                    label 'slave'
+                }
+            }
+            steps {
+                unstash 'elk'
+                script {
+                    sh "pipenv install"
+                    sh "pipenv run pip install checkov"
+                    sh "pipenv run checkov --framework kubernetes -d k8s-manifests -o junitxml -c `cat tests/staticAnalysis/check_list.txt` > result.xml || true"
+                }
+            }
+        }
     
         stage('Infrastructure testing') {    
             steps {
